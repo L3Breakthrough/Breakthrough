@@ -20,5 +20,5 @@ endif()
 
 
 
-add_executable(main_console.out src/main_console.cpp src/Plateau.cpp src/Humain.cpp src/Ia.cpp)
+add_executable(main_console.out src/main_console.cpp src/Plateau.cpp src/Humain.cpp src/Ia.cpp    )
 target_link_libraries( main_console.out ${PKG_LIBRARIES} )
