@@ -1,18 +1,15 @@
-#ifndef _Humain_HPP
-#define _Humain_HPP
+#ifndef _HUMAIN_HPP_
+#define _HUMAIN_HPP_
 
 #include "Joueur.hpp"
 
-class Humain : public Joueur{
+class Humain : public Joueur
+{
 	private :
-		string _nomH;
-		
+		std::string _nomHumain;
 	public :
-		Humain(string nomJ);
-		~Humain();
-		Coups coup_Move(std::vector<Coups>) override ;
-		void setIdentifiant(int ident) override;
-		int getIdentifiant();
+		Humain(std::string nomH);
+		~Humain(){};	
+		Coups coup_Move(std::vector<Coups> coupsPossibles,int d,int f) override ;
 };
-
 #endif

@@ -1,23 +1,16 @@
-#ifndef Joueur_HPP
-#define Joueur_HPP
-#include <iostream>
-#include <string>
+#ifndef _JOUEUR_HPP_
+#define _JOUEUR_HPP_
+
 #include <vector>
+#include <string>
 #include "Coups.hpp"
 
-using namespace std;
-class Joueur{
-	protected :
-		string _nomJoueur;
-		int identifiant;
+class Joueur
+{
 	public :
-		Joueur(){}
-		virtual ~Joueur(){}
-		virtual Coups coup_Move(vector<Coups>)=0;
-		
-		virtual void setIdentifiant(int ident)=0;
-		virtual int getIdentifiant()=0;
-		
+		Joueur(){};
+		virtual ~Joueur(){};
+		virtual Coups coup_Move(std::vector<Coups> coupsPossibles,int d,int f)=0;
 };
 
 #endif

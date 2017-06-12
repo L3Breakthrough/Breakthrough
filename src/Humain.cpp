@@ -1,31 +1,22 @@
 #include "Humain.hpp"
+#include <vector>
 
 using namespace std;
 
-Humain::Humain(string nomJ):_nomH(nomJ){}
+Humain::Humain(string nomJ):_nomHumain(nomJ){}
 
-Coups Humain::coup_Move(vector<Coups> coupsHumain){
+//deplacement de l'humain avec choix points de departs et points d'arrivees
+Coups Humain::coup_Move(vector<Coups> coupsHumain,int d,int f){
 	Coups c;
-	for(unsigned i=0;i<coupsHumain.size();i++){
-		cout<<coupsHumain[i].depart<<"  "<<coupsHumain[i].arrivee<<endl;
+	unsigned i=0;
+    while(!(coupsHumain[i]==c)){
+	    c._depart=d;
+	    c._arrivee=f;	
+        for(i=0;i<coupsHumain.size();i++){
+		   if(coupsHumain[i] == c){
+                break;
+           }
+	    }
 	}
-	cout<<"depart : "<<endl;
-	cin>>c.depart;
-	cout<<"Arrivée : "<<endl;
-	cin>>c.arrivee;
-	
 	return c;
 }
-
-void Humain::setIdentifiant(int ident){
-	identifiant=ident;
-}
-
-int Humain::getIdentifiant(){
-	return identifiant;
-}
-
-Humain::~Humain(){
-	delete this;
-}
-

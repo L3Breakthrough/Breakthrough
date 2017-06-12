@@ -1,18 +1,20 @@
 #ifndef Ia_HPP
 #define Ia_HPP
-#include <random>
+
+#include "Plateau.hpp"
 #include "Joueur.hpp"
 
 class Ia : public Joueur{
 	private :
-		string _nomIa;
+		std::string _nomIa;
 	public :
-		Ia(string nomJ);
-		~Ia();
-		Coups coup_Move(std::vector<Coups>) override ;	
-		void setIdentifiant(int ident) override;
-		int getIdentifiant();
+		Ia(std::string nomJ);
+		Coups coup_Move(std::vector<Coups>,int d,int f) override ;
+		//int aleatoire(vector<Coups> coupsIa);	
+		//~ int eval(Plateau & copiePlateau) ;
+		//~ int getMoveAlphaBetaAux(Plateau p, int depth_max,Coups &best);
 		
 };
 
 #endif
+

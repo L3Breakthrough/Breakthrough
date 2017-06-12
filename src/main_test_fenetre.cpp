@@ -1,15 +1,13 @@
+#include "Fenetre.hpp"
 #include <iostream>
 #include <string>
-#include <unistd.h>
+
 #include "Plateau.hpp"
 #include "Humain.hpp"
 #include "Ia.hpp"
 using namespace std;
 
 int main(){
-	cout<<"Taille Plateau : "<<endl;
-	int taille;
-	cin>>taille;
 	cout<<"                      _________________________"<<endl<<endl;
 	cout<<"                         Choisir type de jeu"<<endl;
 	cout<<"                      _________________________"<<endl<<endl;
@@ -31,69 +29,40 @@ int main(){
 	switch(choix){
 		case 1:
 			
-			joueur1=new Humain(j1);
-			joueur1->setIdentifiant(0);
-			
-			
+			joueur1= new Humain(j1);	
 			joueur2=new Humain(j2);
-			joueur2->setIdentifiant(1);
+			
 			
 			break;
 		case 2:
-			
+	
 			joueur1=new Humain(j1);
-			joueur1->setIdentifiant(0);
-			
-		
-			joueur2=new Ia(j2);
-			joueur2->setIdentifiant(1);
-			
+			joueur2=new Ia(j2);			
 			break;
 		case 3:
 			
 			joueur1=new Ia(j1);
-			joueur1->setIdentifiant(0);
-			
-			
 			joueur2=new Ia(j2);
-			joueur2->setIdentifiant(1);
-			
 			break;
 	}
 			
 		
-	Plateau p(*joueur1,*joueur2,taille) ;
-	p.initialiser();
-	p.afficher();
+	Plateau p ;
+	p.afficherPlateau();
 	vector<Coups> V;
-	
+			
+	Fenetre Ecran_Principal("Breakthrough", 1000, 600);
+	sf::Texture tex_image;
+	sf::Texture tex1_image;
+	sf::Texture tex2_image;
+	sf::Sprite j_image;
 
-	int i=joueur1->getIdentifiant();
 	
-	while(p.j_courantgagne()==0){
-		if(i==0){
-			V = p.coupspossibles(joueur1->getIdentifiant());
-			
-			p.maj_Plateau(joueur1->coup_Move(V),*joueur1);
-
-			
-			i++;
-		}else{
-			if(i==1){
-				V = p.coupspossibles(joueur2->getIdentifiant());
-			
-				p.maj_Plateau(joueur2->coup_Move(V),*joueur2);
-			
-				i--;
-			}
-		}
-		if(choix==3){
-			sleep(3);
-		}
-			
-	}
-	
-	
-	
-return 0;
-}
+	Ecran_Principal.tab_coord();
+	Ecran_Principal.ajouterImage('d',"../Images/damier8.png",tex2_image,j_image);
+	Ecran_Principal.ajouterImage('p',"../Images/jouer.png",tex_image,j_image);
+	Ecran_Principal.ajouterImage('e',"../Images/exit.png",tex1_image,j_image);
+	Ecran_Principal.initialiserEcran();
+	Ecran_Principal.run(V,p,joueur1,joueur2,choix);
+	return 0;
+}	

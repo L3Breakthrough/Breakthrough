@@ -1,39 +1,34 @@
-#ifndef PLATEAU_HPP
-#define PLATEAU_HPP
-#include <iostream>
-#include <string>
-#include <vector>
-#include <fstream> //librairie pour la gestion du fichier
-
+#ifndef _PLATEAU_HPP
+#define _PLATEAU_HPP
 #include "Coups.hpp"
-#include "Joueur.hpp"
-
-const char n ='n'; //la lettre symbolise les pions noir
-const char v = '.'; //symbolise les pions vides 
-const char b = 'b'; //symbolise les pions blancs
+#include <array>
+#include <vector>
 
 class Plateau{
-	private:
-		std::vector<char> plateau;
-		Joueur * _ptr_Joueur1;
-		Joueur * _ptr_Joueur2;
-		int _taille;
-		//int _mode;
-		//vector<Coups> coups_Possible;
-	public:
+	public :
+		enum class Pion {HAUT=1,BAS=2,VIDE=0};
+
+	private :
+		static const int TAILLE=8;
+		std::array<Pion,TAILLE*TAILLE> _tabPions;
+		Pion _joueurCourant;
+		Pion _joueurAdverse;
+		
+	public :
+		
 		Plateau();
-		Plateau( Joueur & j1, Joueur & j2,int taille);
-		//~ Plateau(int taille);
-		void initialiser();
-		void afficher();
-		char getPion(int i);
-		int compterPions(char couleur); 
-		const std::vector<Coups> coupspossibles(int ident);
-		//~ void lireFichier(const string & nomFichier);
-		//~ void const ecrireFichier(const string & nomFichier);
-		//~ istream &operator>>(istream & is, Joueur & j_courant);
-		//~ ostream &operator<<(ostream & os, Joueur & j_courant);
-		void maj_Plateau(Coups  coup,Joueur & j);
-		int j_courantgagne();
-	};
+		Plateau(const Plateau & copiePlateau);
+		Plateau & operator=(const Plateau & copiePlateau);
+		void initialisation();
+		void setPion(int i, Pion typePion);
+		Pion getPion(int i);
+		Pion getJoueurCourant();
+		void prochainJoueur();
+		void afficherPlateau();
+		std::vector<Coups> coupspossibles();
+		
+		void maj_Plateau(Coups coup);
+		int compterPions();
+		Pion courantVainqueur();
+};
 #endif
