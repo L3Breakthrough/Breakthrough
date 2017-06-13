@@ -33,6 +33,15 @@ Plateau::Pion Plateau::getPion(int i){
 	return _tabPions[i];
 }
 
+Plateau::Pion Plateau::getPion2D(int i, int j)
+{
+    return _tabPions[i*TAILLE+j];
+}
+std::array<Plateau::Pion,Plateau::TAILLE*Plateau::TAILLE> & Plateau::getPlateau()
+{
+   return _tabPions;
+}
+
 void Plateau::initialisation()
 {
 	for ( int i=0; i<TAILLE*2; i++ )
@@ -49,6 +58,11 @@ void Plateau::initialisation()
 Plateau::Pion Plateau::getJoueurCourant()
 {
 	return _joueurCourant;
+}
+
+Plateau::Pion Plateau::getJoueurAdverse()
+{
+	return _joueurAdverse;
 }
 		
 void Plateau::prochainJoueur()
@@ -111,12 +125,12 @@ std::vector<Coups> Plateau::coupspossibles(){
 			}else{
 				if(c._depart % TAILLE ==TAILLE-1){ //gestion de l'avancement des pions pour l'angle en haut a droite
 					c._arrivee=i+TAILLE-1;
-					if(_tabPions[i+TAILLE-1]==Pion::VIDE){
+					if(_tabPions[i+TAILLE-1]!=Pion::HAUT){
 						vecCoups.push_back(c);
 					}
 				
 					c._arrivee=i+TAILLE;
-					if(_tabPions[i+TAILLE]!=Pion::HAUT){
+					if(_tabPions[i+TAILLE]==Pion::VIDE){
 						vecCoups.push_back(c);
 					}
 				}else{ //sinon avancee basique soit diagonale gauche/droite ou avance devant
@@ -158,12 +172,12 @@ std::vector<Coups> Plateau::coupspossibles(){
 			}else{
 				if(c._depart % TAILLE == TAILLE-1){ //gestion de l'avancement des pions pour l'angle en bas a droite
 					c._arrivee=i-TAILLE-1;
-					if(_tabPions[i-TAILLE-1]==Pion::VIDE){
+					if(_tabPions[i-TAILLE-1]!=Pion::BAS){
 						vecCoups.push_back(c);
 					}
 				
 					c._arrivee=i-TAILLE;
-					if(_tabPions[i-TAILLE]!=Pion::BAS){
+					if(_tabPions[i-TAILLE]==Pion::VIDE){
 						vecCoups.push_back(c);
 					}
 				}else{ //sinon avancee basique soit diagonale gauche/droite ou avance devant
@@ -202,7 +216,9 @@ void Plateau::maj_Plateau(Coups coup)
 		_tabPions[coup._depart]=Pion::VIDE;
 		_tabPions[coup._arrivee]=Pion::BAS;
 	}
-	afficherPlateau();
+	prochainJoueur();
+	
+	//afficherPlateau();
 }
 
 int Plateau::compterPions()

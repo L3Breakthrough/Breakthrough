@@ -4,13 +4,14 @@
 #include <vector>
 #include <string>
 #include "Coups.hpp"
+#include "Plateau.hpp"
 
 class Joueur
 {
 	public :
 		Joueur(){};
 		virtual ~Joueur(){};
-		virtual Coups coup_Move(std::vector<Coups> coupsPossibles,int d,int f)=0;
+		virtual Coups coup_Move(std::vector<Coups> coupsPossibles,int d,int f, Plateau & p)=0;
 };
 
 #endif

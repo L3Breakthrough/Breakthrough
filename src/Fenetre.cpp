@@ -186,17 +186,17 @@ bool Fenetre::JoueurHumainG(std::vector<Coups> & Ve,Plateau &  p){
 
 void Fenetre::JoueurHumainD(Joueur * joueur,std::vector<Coups> & Ve,Plateau &  p){
 	int r=clicD();
-	p.maj_Plateau(joueur->coup_Move(Ve,arrive[0],r));
+	p.maj_Plateau(joueur->coup_Move(Ve,arrive[0],r, p));
 	miseAjourInterface(p);
-	p.prochainJoueur();
+	//~ p.prochainJoueur();
 }
 
 void Fenetre::IntelligenceA(Joueur * joueur,std::vector<Coups> & Ve,Plateau &  p){
 	Ve = p.coupspossibles();
 	int alea = aleatoire(Ve);
-	p.maj_Plateau(joueur->coup_Move(Ve,alea,alea));
+	p.maj_Plateau(joueur->coup_Move(Ve,alea,alea, p));
 	miseAjourInterface(p);
-	p.prochainJoueur();
+	//~ p.prochainJoueur();
 }
 
 void Fenetre::run(vector<Coups> & Ve,Plateau & p,Joueur *joueur1,Joueur * joueur2,int choix){
@@ -256,7 +256,7 @@ void Fenetre::run(vector<Coups> & Ve,Plateau & p,Joueur *joueur1,Joueur * joueur
 				}
 			}else{
 				//miseAjourInterface(p);
-				sleep(2);
+				sleep(1);
 				IntelligenceA(joueur1,Ve,p);
 			}	
 				
@@ -276,7 +276,7 @@ void Fenetre::run(vector<Coups> & Ve,Plateau & p,Joueur *joueur1,Joueur * joueur
 						JoueurHumainD(joueur2,Ve,p);
 					}
 				}else{
-					sleep(2);
+					sleep(1);
 					IntelligenceA(joueur2,Ve,p);
 				}	
 			}

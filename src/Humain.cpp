@@ -6,7 +6,7 @@ using namespace std;
 Humain::Humain(string nomJ):_nomHumain(nomJ){}
 
 //deplacement de l'humain avec choix points de departs et points d'arrivees
-Coups Humain::coup_Move(vector<Coups> coupsHumain,int d,int f){
+Coups Humain::coup_Move(vector<Coups> coupsHumain,int d,int f, Plateau & p){
 	Coups c;
 	unsigned i=0;
     while(!(coupsHumain[i]==c)){

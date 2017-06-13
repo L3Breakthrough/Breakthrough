@@ -6,7 +6,7 @@ Ia::Ia(string nomJ):_nomIa(nomJ){}
 
 
 //deplacement de l'intelligence artificielle 
-Coups Ia::coup_Move(vector<Coups> coupsIa,int d,int f){
+Coups Ia::coup_Move(vector<Coups> coupsIa,int d,int f,Plateau & p){
 	Coups c;
 	c._depart=coupsIa[d]._depart;
 	c._arrivee=coupsIa[f]._arrivee;
@@ -71,7 +71,7 @@ Coups Ia::coup_Move(vector<Coups> coupsIa,int d,int f){
 
 
 
-//~ int Ia::getMoveAlphaBetaAux(Plateau p, int depth_max,Coups &best){
+//~ int Minmax::getMoveAlphaBetaAux(Plateau p, int depth_max,Coups &best){
 	//~ if ((p.j_courantgagne()!=p.Pion::VIDE) or (depth_max <=0))
 		//~ return eval(p);
 	//~ int max = -100000;
@@ -86,9 +86,9 @@ Coups Ia::coup_Move(vector<Coups> coupsIa,int d,int f){
 		//~ valeur=-getMoveAlphaBetaAux(p,depth_max-1,best);
 		//~ if(valeur>max){
 			//~ max=valeur;
-			//~ meilleur=Ve[i];
-		//~ }
-	//~ }
+			 //~ meilleur=Ve[i];
+		 //~ }
+	 //~ }
 	//~ best=meilleur;
 	//~ return valeur;
 //~ }

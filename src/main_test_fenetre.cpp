@@ -4,6 +4,7 @@
 
 #include "Plateau.hpp"
 #include "Humain.hpp"
+#include "Minmax.hpp"
 #include "Ia.hpp"
 using namespace std;
 
@@ -37,18 +38,18 @@ int main(){
 		case 2:
 	
 			joueur1=new Humain(j1);
-			joueur2=new Ia(j2);			
+			joueur2=new Minmax(j2);			
 			break;
 		case 3:
 			
-			joueur1=new Ia(j1);
-			joueur2=new Ia(j2);
+			joueur1=new Minmax(j1);
+			joueur2=new Minmax(j2);
 			break;
 	}
 			
 		
 	Plateau p ;
-	p.afficherPlateau();
+	//p.afficherPlateau();
 	vector<Coups> V;
 			
 	Fenetre Ecran_Principal("Breakthrough", 1000, 600);
