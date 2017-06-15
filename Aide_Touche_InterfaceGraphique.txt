@@ -1,0 +1,8 @@
+Pour jouer en Humain vs Humain on utilise le clic gauche et le clic droit de la souris .
+Le clic gauche pour selectionner le pion qu'on souhaite déplacer.
+Le clic droit pour selectionner la case où on souhaite le déplacer.
+
+Pour les modes de jeu , seul le clic gauche est utilisé 
+Il faut appuyer sur Jouer puis ensuite appuyer sur le mode de jeu souhaité
+En cours de jeu on peut changer de modes directementen appuyant sur un autre mode 
+Une fois la partie terminé , on a la possibilité de soit Quitter la fenêtre , soit Jouer une nouvelle partie 
