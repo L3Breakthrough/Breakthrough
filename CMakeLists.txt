@@ -23,5 +23,5 @@ endif()
 
 
 
-add_executable(main_test_fenetre.out src/main_test_fenetre.cpp src/Plateau.cpp src/Coups.cpp src/Humain.cpp src/Fenetre.cpp src/Minmax.cpp src/Ia.cpp)
+add_executable(main_test_fenetre.out src/main_test_fenetre.cpp src/Plateau.cpp src/Coups.cpp src/Humain.cpp src/Fenetre.cpp src/AlphaBeta.cpp src/Ia.cpp)
 target_link_libraries( main_test_fenetre.out ${PKG_LIBRARIES} ${SFML_LIBRARY})

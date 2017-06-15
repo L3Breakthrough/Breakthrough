@@ -1,7 +1,7 @@
 #include "Fenetre.hpp"
 
-Fenetre::Fenetre(std::string nomFenetre, unsigned largeurEcran, unsigned longueurEcran) 
-: _nomFenetre(nomFenetre), _largeurEcran(largeurEcran), _longueurEcran(longueurEcran),
+Fenetre::Fenetre(std::string nomFenetre, unsigned largeurEcran, unsigned longueurEcran,int choix) 
+: _nomFenetre(nomFenetre), _largeurEcran(largeurEcran), _longueurEcran(longueurEcran),choix(choix),
 window(sf::VideoMode(_largeurEcran,_longueurEcran), _nomFenetre,sf::Style::Close)
 {}
 
@@ -20,10 +20,32 @@ void Fenetre::ajouterImage(char ident,std::string cheminImage,sf::Texture & t_im
 
 sf::Sprite Fenetre::positionImage(char ident,sf::Sprite image){	
 	if(ident=='p'){	
-		image.setPosition(0.5*(xW+z-t_X),0.25*(w-2*t_Y));	
+		image.setPosition(0.5*(xW+z-t_X),0.25*(w-2*t_Y));	//1
 	}else{
-		if(ident=='e'){	
-			image.setPosition(0.5*(xW+z-t_X),0.25*(3*w-2*t_Y));	
+		if(ident=='j'){	
+			image.setPosition(0.5*(xW+z-t_X),0.25*(1.5*w-2*t_Y));
+			image.setColor(sf::Color(255,255,255,0));	
+		}else{
+			if(ident=='i'){	
+				image.setPosition(0.5*(xW+z-t_X),0.25*(2*w-2*t_Y));
+				image.setColor(sf::Color(255,255,255,0));	
+			}else{
+					if(ident=='a'){	
+						image.setPosition(0.5*(xW+z-t_X),0.25*(2.5*w-2*t_Y));	
+						image.setColor(sf::Color(255,255,255,0));
+					}else{
+						if(ident=='e'){	
+							image.setPosition(0.5*(xW+z-t_X),0.25*(3*w-2*t_Y));	//3
+						}
+						else{
+							if(ident=='g'){
+								image.setPosition(0,140);
+								image.setColor(sf::Color(255,255,255,0));
+							}
+						}
+					}
+				
+			}
 		}
 	}
 	return image;
@@ -93,7 +115,6 @@ void Fenetre::setCouleur(){
 }
 
 void Fenetre::miseAjourInterface(Plateau & p){
-	//~ std::vector<Plateau::Pion> _tabPions=p.get_();
 	for(int i=0; i<taille*taille; i++){
 		if(p.getPion(i)==p.Pion::HAUT){
 			rectangle[i].first.setFillColor(sf::Color(255,0,0,255));
@@ -188,20 +209,23 @@ void Fenetre::JoueurHumainD(Joueur * joueur,std::vector<Coups> & Ve,Plateau &  p
 	int r=clicD();
 	p.maj_Plateau(joueur->coup_Move(Ve,arrive[0],r, p));
 	miseAjourInterface(p);
-	//~ p.prochainJoueur();
+	p.prochainJoueur();
 }
 
 void Fenetre::IntelligenceA(Joueur * joueur,std::vector<Coups> & Ve,Plateau &  p){
 	Ve = p.coupspossibles();
 	int alea = aleatoire(Ve);
+	
 	p.maj_Plateau(joueur->coup_Move(Ve,alea,alea, p));
 	miseAjourInterface(p);
-	//~ p.prochainJoueur();
+	p.prochainJoueur();
 }
 
-void Fenetre::run(vector<Coups> & Ve,Plateau & p,Joueur *joueur1,Joueur * joueur2,int choix){
+void Fenetre::run(vector<Coups> & Ve,Plateau & p){
 	//Boucle de jeu
 	bool a=false;
+	
+	int prochainClic;
 	while(window.isOpen())
 	{
 		//Gestion des événements
@@ -218,16 +242,37 @@ void Fenetre::run(vector<Coups> & Ve,Plateau & p,Joueur *joueur1,Joueur * joueur
 			
 			if (event.type == sf::Event::MouseButtonPressed){
 				if (event.mouseButton.button == sf::Mouse::Left){
-					if(event.mouseButton.x>=S_image[2].getPosition().x
-						&& event.mouseButton.x<=S_image[2].getPosition().x+t_X
-						&& event.mouseButton.y>=S_image[2].getPosition().y
-						&& event.mouseButton.y<=S_image[2].getPosition().y+t_Y){
+					if(event.mouseButton.x>=S_image[5].getPosition().x
+						&& event.mouseButton.x<=S_image[5].getPosition().x+t_X
+						&& event.mouseButton.y>=S_image[5].getPosition().y
+						&& event.mouseButton.y<=S_image[5].getPosition().y+t_Y){
 				
 						window.close();
 					}
 				}
 			}
 		}
+		
+		if(p.courantVainqueur()==p.Pion::HAUT){
+			initialiserEcran();
+			p.initialisation();
+			S_image[6].setColor(sf::Color(255,255,255,255));
+			for(int i=2;i<(int)S_image.size()-3;i++){
+				S_image[i].setColor(sf::Color(255,255,255,0));
+			}
+			prochainClic=0;
+		}else{
+			if(p.courantVainqueur()==p.Pion::BAS){
+				initialiserEcran();
+				p.initialisation();
+				S_image[7].setColor(sf::Color(255,255,255,255));
+				for(int i=2;i<(int)S_image.size()-3;i++){
+					S_image[i].setColor(sf::Color(255,255,255,0));
+				}
+				prochainClic=0;
+			}
+		}
+		
 		window.clear(sf::Color(96, 96, 96, 255));
 		for(int i=0;i<(int)S_image.size();i++){
 			window.draw(S_image[i]);
@@ -239,7 +284,66 @@ void Fenetre::run(vector<Coups> & Ve,Plateau & p,Joueur *joueur1,Joueur * joueur
 		}
 	
 		window.display();
+			
+
 		
+		if(sf::Mouse::isButtonPressed(sf::Mouse::Left)){ 
+			
+			if(sf::Mouse::getPosition(window).x>=S_image[1].getPosition().x
+			&& sf::Mouse::getPosition(window).x<=S_image[1].getPosition().x+t_X
+			&& sf::Mouse::getPosition(window).y>=S_image[1].getPosition().y
+			&& sf::Mouse::getPosition(window).y<=S_image[1].getPosition().y+t_Y){
+				
+				for(int i=2;i<(int)S_image.size()-3;i++){
+					S_image[i].setColor(sf::Color(255,255,255,255));
+					S_image[6].setColor(sf::Color(255,255,255,0));
+					S_image[7].setColor(sf::Color(255,255,255,0));
+				}
+				choix=0;
+			}
+			
+			prochainClic=1;
+		}
+		if(prochainClic==1){
+			if(sf::Mouse::isButtonPressed(sf::Mouse::Left)){ 
+				if(sf::Mouse::getPosition(window).x>=S_image[2].getPosition().x
+					&& sf::Mouse::getPosition(window).x<=S_image[2].getPosition().x+t_X
+					&& sf::Mouse::getPosition(window).y>=S_image[2].getPosition().y
+					&& sf::Mouse::getPosition(window).y<=S_image[2].getPosition().y+t_Y){
+					
+					initialiserEcran();
+					p.initialisation();
+					joueur1=new Humain("Humain");
+					joueur2=new Humain("Humain_");
+					choix =1;		
+				}
+				if(sf::Mouse::getPosition(window).x>=S_image[3].getPosition().x
+					&& sf::Mouse::getPosition(window).x<=S_image[3].getPosition().x+t_X
+					&& sf::Mouse::getPosition(window).y>=S_image[3].getPosition().y
+					&& sf::Mouse::getPosition(window).y<=S_image[3].getPosition().y+t_Y){
+						
+					initialiserEcran();
+					p.initialisation();
+					joueur1=new Humain("Humain");
+					joueur2=new AlphaBeta("Alpha");
+					choix =2;		
+				}
+			
+				if(sf::Mouse::getPosition(window).x>=S_image[4].getPosition().x
+					&& sf::Mouse::getPosition(window).x<=S_image[4].getPosition().x+t_X
+					&& sf::Mouse::getPosition(window).y>=S_image[4].getPosition().y
+					&& sf::Mouse::getPosition(window).y<=S_image[4].getPosition().y+t_Y){
+						
+					initialiserEcran();
+					p.initialisation();
+					joueur1=new Ia("Alea");
+					joueur2=new AlphaBeta("Alpha");
+					choix =3;		
+				}
+		}
+	}
+	
+	
 		if(p.getJoueurCourant()==p.Pion::HAUT){	
 			if(choix==1 || choix==2){
 				//clic gauche
@@ -255,9 +359,11 @@ void Fenetre::run(vector<Coups> & Ve,Plateau & p,Joueur *joueur1,Joueur * joueur
 					JoueurHumainD(joueur1,Ve,p);
 				}
 			}else{
-				//miseAjourInterface(p);
-				sleep(1);
+				if(choix==3){
+				
+				
 				IntelligenceA(joueur1,Ve,p);
+			}
 			}	
 				
 		}else{
@@ -276,14 +382,17 @@ void Fenetre::run(vector<Coups> & Ve,Plateau & p,Joueur *joueur1,Joueur * joueur
 						JoueurHumainD(joueur2,Ve,p);
 					}
 				}else{
-					sleep(1);
+					if(choix==2 || choix==3){
+					
+					
 					IntelligenceA(joueur2,Ve,p);
+				}
 				}	
 			}
 		}
-	
-		if(p.courantVainqueur()!=p.Pion::VIDE){
-			window.close();
-		}
 	}
+
+	
 }
+	
+

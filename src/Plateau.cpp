@@ -216,9 +216,6 @@ void Plateau::maj_Plateau(Coups coup)
 		_tabPions[coup._depart]=Pion::VIDE;
 		_tabPions[coup._arrivee]=Pion::BAS;
 	}
-	prochainJoueur();
-	
-	//afficherPlateau();
 }
 
 int Plateau::compterPions()

@@ -1,13 +1,13 @@
-#include "Minmax.hpp"
+#include "AlphaBeta.hpp"
 #include <iostream>
 using namespace std;
 
-Minmax::Minmax(std::string nomH) : _nomHumain(nomH)
+AlphaBeta::AlphaBeta(std::string nomH) : _nomHumain(nomH)
 {
  
 }
 
-int Minmax::eval_Plateau(Plateau & copiePlateau)
+int AlphaBeta::eval_Plateau(Plateau & copiePlateau)
 {
     int somme=0;
     
@@ -47,6 +47,8 @@ int Minmax::eval_Plateau(Plateau & copiePlateau)
 								 {20,28,28,28,28,28,28,20},
 								 {36,36,36,36,36,36,36,36}
 				                 };
+				                 
+	
         
 				                 
 				                 
@@ -68,18 +70,19 @@ int Minmax::eval_Plateau(Plateau & copiePlateau)
      return somme;   
 }
 
-int Minmax::getMoveAlphaBetaAux(Plateau p, int depth_max,Coups &best, int  alpha, int  beta){
-	if ((p.courantVainqueur()!=p.Pion::VIDE) or (depth_max ==0)){
+int AlphaBeta::getMoveAlphaBetaAux(Plateau p, int depth_max,Coups &best, int  alpha, int  beta){
+	if ((p.courantVainqueur()!=p.Pion::VIDE) or (depth_max <=0)){
 		return eval_Plateau(p);
 	}	
 
 	int valeur;
 	Coups meilleur;
 	vector<Coups> Va=p.coupspossibles();
-    
+	
 	for (unsigned i=0;i<Va.size();i++){
         Plateau pcopie=p;
 		pcopie.maj_Plateau(Va[i]);
+		pcopie.prochainJoueur();
 		valeur=-getMoveAlphaBetaAux(pcopie,depth_max-1,best, -beta, -alpha);
 		if(valeur>alpha){
 			alpha=valeur;
@@ -90,9 +93,8 @@ int Minmax::getMoveAlphaBetaAux(Plateau p, int depth_max,Coups &best, int  alpha
 	 }
 	best=meilleur;
 	return alpha;
-    //~ std::cout<<"Best = "<<best._depart<<std::endl;
 }
-Coups Minmax::coup_Move(std::vector<Coups> coupsPossibles, int d, int f,  Plateau & p)
+Coups AlphaBeta::coup_Move(std::vector<Coups> coupsPossibles, int d, int f,  Plateau & p)
 {
     Coups c;
     getMoveAlphaBetaAux(p,3,c, -10000, 10000);

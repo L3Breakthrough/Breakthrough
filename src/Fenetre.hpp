@@ -11,6 +11,9 @@
 #include "Plateau.hpp"
 #include "Joueur.hpp"
 #include <unistd.h>
+#include "Humain.hpp"
+#include "AlphaBeta.hpp"
+#include "Ia.hpp"
 
 #define xW 1000
 #define z 600
@@ -30,11 +33,13 @@ class Fenetre{
 		sf::Vector2i localPosition;
 		std::vector<Coordonnee> Tab;
 		std::vector<int> arrive;
-		
+		int choix;
+		Joueur * joueur1;
+		Joueur * joueur2;
 		sf::RenderWindow window;
 		sf::Event event;
 	public:
-		Fenetre(std::string nomFenetre,unsigned largeurEcran,unsigned longueurEcran);
+		Fenetre(std::string nomFenetre,unsigned largeurEcran,unsigned longueurEcran,int choix);
 		void ajouterImage(char ident,std::string cheminImage,sf::Texture & t_image,sf::Sprite image);
 		sf::Sprite positionImage(char ident,sf::Sprite image);
 		void tab_coord();
@@ -50,7 +55,7 @@ class Fenetre{
 		int aleatoire(std::vector<Coups> coupsIa);
 		int recherche1(sf::Vector2i localPo);
 		void miseAjourInterface(Plateau & p);
-		void run(vector<Coups> & Ve,Plateau &  p,Joueur * joueur1,Joueur * joueur2,int choix);
+		void run(vector<Coups> & Ve,Plateau &  p);
 		
 };
 		
