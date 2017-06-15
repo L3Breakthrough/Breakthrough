@@ -13,6 +13,8 @@ class Plateau{
 		std::array<Pion,TAILLE*TAILLE> _tabPions;
 		Pion _joueurCourant;
 		Pion _joueurAdverse;
+		int _d;
+		int _f;
 		
 	public :
 	
@@ -21,6 +23,10 @@ class Plateau{
 		Plateau & operator=(const Plateau & copiePlateau);
 		void initialisation();
 		void setPion(int i, Pion typePion);
+		void setd(int d);
+		void setf(int f);
+		int getd();
+		int getf();
 		Pion getPion(int i);
         Pion getPion2D(int i, int j);
 		Pion getJoueurCourant();

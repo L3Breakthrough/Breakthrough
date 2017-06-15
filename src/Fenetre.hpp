@@ -6,11 +6,11 @@
 #include <vector>
 #include <algorithm>
 #include <math.h>
-#include <random>
 #include "Coordonnee.hpp"
 #include "Plateau.hpp"
 #include "Joueur.hpp"
 #include <unistd.h>
+#include <memory>
 #include "Humain.hpp"
 #include "AlphaBeta.hpp"
 #include "Ia.hpp"
@@ -34,8 +34,8 @@ class Fenetre{
 		std::vector<Coordonnee> Tab;
 		std::vector<int> arrive;
 		int choix;
-		Joueur * joueur1;
-		Joueur * joueur2;
+		std::shared_ptr<Joueur> joueur1;
+		std::shared_ptr<Joueur> joueur2;
 		sf::RenderWindow window;
 		sf::Event event;
 	public:
@@ -50,9 +50,8 @@ class Fenetre{
 		bool clicG(std::vector<Coups> Ve);
 		int clicD();
 		bool JoueurHumainG(std::vector<Coups> & Ve,Plateau &  p);
-		void JoueurHumainD(Joueur * joueur,std::vector<Coups> & Ve,Plateau &  p);
-		void IntelligenceA(Joueur * joueur1,std::vector<Coups> & Ve,Plateau &  p);
-		int aleatoire(std::vector<Coups> coupsIa);
+		void JoueurHumainD(std::shared_ptr<Joueur> joueur,std::vector<Coups> & Ve,Plateau &  p);
+		void IntelligenceA(std::shared_ptr<Joueur> joueur,std::vector<Coups> & Ve,Plateau &  p);
 		int recherche1(sf::Vector2i localPo);
 		void miseAjourInterface(Plateau & p);
 		void run(vector<Coups> & Ve,Plateau &  p);

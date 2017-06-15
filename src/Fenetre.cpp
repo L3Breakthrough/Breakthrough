@@ -188,13 +188,7 @@ int Fenetre::clicD(){
 	return retour;		
 }		
 
-int Fenetre::aleatoire(std::vector<Coups> coupsIa){
-	random_device device; //pour l'instant il s'agit d'un random
-	mt19937 generator(device());
-	uniform_int_distribution<int> distribution(0,coupsIa.size()-1);
-	int aleatoire=distribution(generator);
-	return aleatoire;
-}
+
 
 bool Fenetre::JoueurHumainG(std::vector<Coups> & Ve,Plateau &  p){
 	bool a=false;
@@ -205,18 +199,18 @@ bool Fenetre::JoueurHumainG(std::vector<Coups> & Ve,Plateau &  p){
 	return a;
 }
 
-void Fenetre::JoueurHumainD(Joueur * joueur,std::vector<Coups> & Ve,Plateau &  p){
+void Fenetre::JoueurHumainD(std::shared_ptr<Joueur> joueur,std::vector<Coups> & Ve,Plateau &  p){
 	int r=clicD();
-	p.maj_Plateau(joueur->coup_Move(Ve,arrive[0],r, p));
+	p.setd(arrive[0]);
+	p.setf(r);
+	p.maj_Plateau(joueur->coup_Move(Ve, p));
 	miseAjourInterface(p);
 	p.prochainJoueur();
 }
 
-void Fenetre::IntelligenceA(Joueur * joueur,std::vector<Coups> & Ve,Plateau &  p){
+void Fenetre::IntelligenceA(std::shared_ptr<Joueur> joueur,std::vector<Coups> & Ve,Plateau &  p){
 	Ve = p.coupspossibles();
-	int alea = aleatoire(Ve);
-	
-	p.maj_Plateau(joueur->coup_Move(Ve,alea,alea, p));
+	p.maj_Plateau(joueur->coup_Move(Ve,p));
 	miseAjourInterface(p);
 	p.prochainJoueur();
 }
@@ -254,6 +248,7 @@ void Fenetre::run(vector<Coups> & Ve,Plateau & p){
 		}
 		
 		if(p.courantVainqueur()==p.Pion::HAUT){
+			choix=0;
 			initialiserEcran();
 			p.initialisation();
 			S_image[6].setColor(sf::Color(255,255,255,255));
@@ -263,6 +258,7 @@ void Fenetre::run(vector<Coups> & Ve,Plateau & p){
 			prochainClic=0;
 		}else{
 			if(p.courantVainqueur()==p.Pion::BAS){
+				choix=0;
 				initialiserEcran();
 				p.initialisation();
 				S_image[7].setColor(sf::Color(255,255,255,255));
@@ -299,7 +295,7 @@ void Fenetre::run(vector<Coups> & Ve,Plateau & p){
 					S_image[6].setColor(sf::Color(255,255,255,0));
 					S_image[7].setColor(sf::Color(255,255,255,0));
 				}
-				choix=0;
+				
 			}
 			
 			prochainClic=1;
@@ -313,8 +309,8 @@ void Fenetre::run(vector<Coups> & Ve,Plateau & p){
 					
 					initialiserEcran();
 					p.initialisation();
-					joueur1=new Humain("Humain");
-					joueur2=new Humain("Humain_");
+					joueur1=std::make_shared<Humain>("Humain");
+					joueur2=std::make_shared<Humain>("Humain_");
 					choix =1;		
 				}
 				if(sf::Mouse::getPosition(window).x>=S_image[3].getPosition().x
@@ -324,8 +320,8 @@ void Fenetre::run(vector<Coups> & Ve,Plateau & p){
 						
 					initialiserEcran();
 					p.initialisation();
-					joueur1=new Humain("Humain");
-					joueur2=new AlphaBeta("Alpha");
+					joueur1=std::make_shared<Humain>("Humain");
+					joueur2=std::make_shared<AlphaBeta>("Alpha");
 					choix =2;		
 				}
 			
@@ -336,8 +332,8 @@ void Fenetre::run(vector<Coups> & Ve,Plateau & p){
 						
 					initialiserEcran();
 					p.initialisation();
-					joueur1=new Ia("Alea");
-					joueur2=new AlphaBeta("Alpha");
+					joueur1=std::make_shared<Ia>("Alea");
+					joueur2=std::make_shared<AlphaBeta>("Alpha");
 					choix =3;		
 				}
 		}
@@ -363,6 +359,7 @@ void Fenetre::run(vector<Coups> & Ve,Plateau & p){
 				
 				
 				IntelligenceA(joueur1,Ve,p);
+				
 			}
 			}	
 				

@@ -11,7 +11,7 @@ class Joueur
 	public :
 		Joueur(){};
 		virtual ~Joueur(){};
-		virtual Coups coup_Move(std::vector<Coups> coupsPossibles,int d,int f, Plateau & p)=0;
+		virtual Coups coup_Move(std::vector<Coups> coupsPossibles,Plateau & p)=0;
 };
 
 #endif

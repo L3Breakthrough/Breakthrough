@@ -94,9 +94,9 @@ int AlphaBeta::getMoveAlphaBetaAux(Plateau p, int depth_max,Coups &best, int  al
 	best=meilleur;
 	return alpha;
 }
-Coups AlphaBeta::coup_Move(std::vector<Coups> coupsPossibles, int d, int f,  Plateau & p)
+Coups AlphaBeta::coup_Move(std::vector<Coups> coupsPossibles, Plateau & p)
 {
     Coups c;
-    getMoveAlphaBetaAux(p,3,c, -10000, 10000);
+    getMoveAlphaBetaAux(p,5,c, -10000, 10000);
     return c;
 }

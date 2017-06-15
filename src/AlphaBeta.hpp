@@ -11,7 +11,7 @@ class AlphaBeta : public Joueur
 	public :
 		AlphaBeta(std::string nomH);
 		~AlphaBeta(){};	
-		Coups coup_Move(std::vector<Coups> coupsPossibles, int d, int f, Plateau & p) override ;
+		Coups coup_Move(std::vector<Coups> coupsPossibles, Plateau & p) override ;
         int eval_Plateau(Plateau & copiePlateau);
         int getMoveAlphaBetaAux(Plateau p, int depth_max,Coups &best, int alpha, int beta);
 };

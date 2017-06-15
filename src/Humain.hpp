@@ -11,6 +11,6 @@ class Humain : public Joueur
 	public :
 		Humain(std::string nomH);
 		~Humain(){};	
-		Coups coup_Move(std::vector<Coups> coupsPossibles,int d,int f, Plateau & p) override ;
+		Coups coup_Move(std::vector<Coups> coupsPossibles,Plateau & p) override ;
 };
 #endif

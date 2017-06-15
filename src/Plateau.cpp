@@ -55,6 +55,23 @@ void Plateau::initialisation()
 	_joueurAdverse=Pion::BAS;
 }
 
+void Plateau::setd(int d){
+	_d=d;
+}
+
+void Plateau::setf(int f){
+	_f=f;
+}
+
+int Plateau::getd(){
+	return _d;
+}
+
+int Plateau::getf(){
+	return _f;
+}
+
+
 Plateau::Pion Plateau::getJoueurCourant()
 {
 	return _joueurCourant;
